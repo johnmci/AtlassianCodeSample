@@ -1,0 +1,6 @@
+framework module Pods_MattLangan {
+  umbrella header "Pods-MattLangan-umbrella.h"
+
+  export *
+  module * { export * }
+}
