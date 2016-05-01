@@ -6,31 +6,149 @@
 //  Copyright © 2016 Corporate Smalltalk Consulting Ltd. All rights reserved.
 //
 
+// Really for doing test drive development.
+
 import XCTest
 @testable import MattLangan
+
+extension String {
+    
+    //emoticons which are alphanumeric strings, no longer than 15 characters, contained in parenthesis. 
+    //https://www.hipchat.com/emoticons  examples do not use numbers!
+    
+    func getEmoticons() -> [String]? {
+        let emoticonsDetector = try? NSRegularExpression(pattern: "\\((\\w{1,15})\\)", options: NSRegularExpressionOptions.CaseInsensitive)
+        let results = emoticonsDetector?.matchesInString(self, options: NSMatchingOptions.WithoutAnchoringBounds, range: NSMakeRange(0, self.utf16.count)).map { $0 }
+        
+        return results?.map({
+            (self as NSString).substringWithRange($0.rangeAtIndex(1))
+        })
+    }
+    
+    func getEmoticonsOrNil() -> [String]? {
+        let results = self.getEmoticons()
+        if results == nil || results?.isEmpty == true {
+            return nil
+        }
+        return results
+    }
+
+    func getUniqueEmoticonsOrNil() -> [String]? {
+        guard let results = self.getEmoticonsOrNil() else {
+            return nil
+        }
+        return Array(Set(results))
+    }
+    
+    /* The vendor code base returns nil (maybe) or an empty string array. This is a hassle, so supply a method that returns nil if nil or empty */
+    
+    func getMentionsOrNil() -> [String]? {
+        let results = self.getMentions()
+        if results == nil || results?.isEmpty == true {
+            return nil
+        }
+        return results
+    }
+    
+    func getUniqueMentionsOrNil() -> [String]? {
+        guard let results = self.getMentionsOrNil() else {
+            return nil
+        }
+        return Array(Set(results))
+    }
+}
+
+//No idea about URLs that are language specific
 
 class MattLanganTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testMentions() {
+        
+        //Note http://help.hipchat.com/knowledgebase/articles/64429-how-to-mentions-work- is a stale link
+        //Maybe https://confluence.atlassian.com/doc/mentions-251725350.html
+        
+        //Assumption here is a-z,A-Z,0-9  If other language specific characters are used (like Chinese) this obviously won't work
+        
+        //Check no mentions
+        
+        XCTAssertNil("".getMentionsOrNil())
+        XCTAssertNil(" ".getMentionsOrNil())
+        XCTAssertNil("john".getMentionsOrNil())
+        
+        //Check for @ but no valid mention
+        
+        XCTAssertNil("@".getMentionsOrNil())
+        XCTAssertNil("@@".getMentionsOrNil())
+        XCTAssertNil("@ @".getMentionsOrNil())
+        XCTAssertNil("@$".getMentionsOrNil())
+        //We might type this but it's illegal
+        XCTAssertNil("@(john) ".getMentionsOrNil())
+        
+        //Check for valid data
+        XCTAssertNotNil("@john".getMentionsOrNil())
+        XCTAssertEqual("@john".getMentionsOrNil()![0],"john")
+        XCTAssertEqual("@john ".getMentionsOrNil()![0],"john")
+        //In this case % is the terminator versus a space
+        XCTAssertEqual("@john% ".getMentionsOrNil()![0],"john")
+        
+        //Although it talks about words, I'm guessing john2 would be legal
+        XCTAssertNotNil("@john2".getMentionsOrNil())
+        XCTAssertEqual("@John2 ".getMentionsOrNil()![0],"John2")
+
+        //Check for two
+        XCTAssertEqual("@john @harry ".getMentionsOrNil()![0],"john")
+        XCTAssertEqual("@john @harry ".getMentionsOrNil()![1],"harry")
+        XCTAssertEqual("@john @john ".getMentionsOrNil()![0],"john")
+        XCTAssertEqual("@john @john ".getMentionsOrNil()![1],"john")
+        
+        //Check for Unique
+        XCTAssertEqual("@john @harry ".getUniqueMentionsOrNil()!.count,2)
+        XCTAssertEqual("@john @john ".getUniqueMentionsOrNil()!.count,1)
+        
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
+    func testEmoticons() {
+        //check invalid constructs
+        
+        XCTAssertNil("()".getEmoticonsOrNil())
+        XCTAssertNil("(a )".getEmoticonsOrNil())
+        XCTAssertNil("(a ".getEmoticonsOrNil())
+        XCTAssertNil("(a".getEmoticonsOrNil())
+        XCTAssertNil("(http://www.example.com)".getEmoticonsOrNil())
+        
+        //check legal constructs
+        XCTAssertNotNil("((a))".getEmoticonsOrNil())
+        XCTAssertNotNil("(awthanks)".getEmoticonsOrNil())
+        XCTAssertNotNil("(Awthanks123)".getEmoticonsOrNil())
+        XCTAssertEqual("(awthanks)".getEmoticonsOrNil()![0],"awthanks")
+
+        //Check for two
+        XCTAssertEqual("(awthanks)(x)".getEmoticonsOrNil()![0],"awthanks")
+        XCTAssertEqual("(awthanks) (x)".getEmoticonsOrNil()![1],"x")
+        XCTAssertEqual("(awthanks) (awthanks) ".getEmoticonsOrNil()![0],"awthanks")
+        XCTAssertEqual("(awthanks) (awthanks) ".getEmoticonsOrNil()![1],"awthanks")
+        
+        //Check for Unique
+        XCTAssertEqual("(awthanks) (x)".getUniqueEmoticonsOrNil()!.count,2)
+        XCTAssertEqual("(awthanks) (awthanks)".getUniqueEmoticonsOrNil()!.count,1)
+        XCTAssertEqual("(awthanks) (awthanks)".getEmoticonsOrNil()![0],"awthanks")
+
+        //check length cutoff at 15
+        XCTAssertNotNil("(123456789012345)".getEmoticonsOrNil())
+        XCTAssertNil("(1234567890123456)".getEmoticonsOrNil())
+        
+//        XCTAssertNil("".getEmoticonsOrNil())
+//        XCTAssertNil(" ".getEmoticonsOrNil())
+//        XCTAssertNil("john".getEmoticonsOrNil())
+//        XCTAssertNotNil("()".getEmoticonsOrNil())
+
     }
-    
 }
