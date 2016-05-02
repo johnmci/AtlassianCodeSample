@@ -1,5 +1,5 @@
 //
-//  MLBaseVM.swift
+//  MLParser.swift
 //  MattLangan
 //
 //  Created by John M McIntosh on 2016-05-01.
@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import ObjectMapper
 
-class MLBaseVM {
+class MLParser {
     var mentions:[String]?
     var emoticons:[String]?
     var urls:[NSURL]?
@@ -18,23 +18,32 @@ class MLBaseVM {
     var urlTitlesFetched = 0
     var holderForWebKitDelegate = [MLBaseWebViewHolder]()
     
-    convenience init(input:String, fetchURLTitlesOnCompletion: ((MLBaseVM) -> Void)? ) {
+    convenience init(input:String, fetchURLTitlesOnCompletion: ((MLParser) -> Void)? ) {
         self.init()
         mentions = input.getUniqueMentionsOrNil()
         emoticons = input.getUniqueEmoticonsOrNil()
         urls = input.getUniqueURLsOrNil()
-        guard let urls = urls, let fetchURLTitlesOnCompletionNotNil = fetchURLTitlesOnCompletion where urls.count > 0 else {
+        
+        guard let urls = urls where urls.count > 0 else {
             fetchURLTitlesOnCompletion?(self)
             return
         }
 
+        guard  let fetchURLTitlesOnCompletionNotNil = fetchURLTitlesOnCompletion else {
+            urls.forEach { (url) in
+                self.urlTitles.append((url.absoluteString,""))
+            }
+            fetchURLTitlesOnCompletion?(self)
+            return
+        }
+        
         //Need urls and a completion block
         
-        for i in 0..<urls.count {
+        urls.forEach { (url) in
             //when we return we have the url, titlestring, due to delay these can come back in any order
             //we count these returns and compare to total, because this runs on the main thread we are "thread safe" so the urlTitlesFetched value is alway sane
             
-            self.fetchTitleStringFromHost(urls[i].absoluteString, onCompletion: { (urlString, titleString) in
+            self.fetchTitleStringFromHost(url.absoluteString, onCompletion: { (urlString, titleString) in
                 self.urlTitles.append((urlString,titleString))
                 self.urlTitlesFetched = self.urlTitlesFetched + 1
                 if self.urlTitlesFetched == urls.count {
@@ -58,7 +67,7 @@ class MLBaseVM {
             returnString = returnString + "\n" + jsonString
         }
 
-        if let urls = urls {
+        if urls != nil {
             let links = self.urlTitles.map({ (linkTuple) -> MLJSONUrls in
                 MLJSONUrls(url: linkTuple.urlString, title: linkTuple.titleString ?? "")
             })
@@ -77,7 +86,7 @@ class MLBaseVM {
         let webSiteDelegate = MLBaseWebViewHolder(host: host, completion: onCompletion)
         
         // We have to hold onto the delegate object here, otherwise it will get Garbaged Collected as the logic runs on a background thread. 
-        // This should be GCed when the MLBaseVM is GCed
+        // This should be GCed when the MLParser is GCed
         
         self.holderForWebKitDelegate.append(webSiteDelegate)
     }

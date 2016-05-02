@@ -16,11 +16,12 @@
 		945311EE1CD694E800E18B07 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311EA1CD694E800E18B07 /* StringExtensions.swift */; };
 		945311F01CD6959D00E18B07 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 945311EF1CD6959D00E18B07 /* Podfile */; };
 		945311F41CD7129B00E18B07 /* String+MattLangan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311F31CD7129B00E18B07 /* String+MattLangan.swift */; };
-		945311F61CD714AE00E18B07 /* MLBaseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311F51CD714AE00E18B07 /* MLBaseVM.swift */; };
+		945311F61CD714AE00E18B07 /* MLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311F51CD714AE00E18B07 /* MLParser.swift */; };
 		945311FB1CD73D5300E18B07 /* MLJSONMentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311FA1CD73D5300E18B07 /* MLJSONMentions.swift */; };
 		945311FE1CD7429900E18B07 /* MLJSONEmoticons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311FD1CD7429900E18B07 /* MLJSONEmoticons.swift */; };
 		945312001CD7441200E18B07 /* MLJSONLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311FF1CD7441200E18B07 /* MLJSONLinks.swift */; };
 		945312021CD75AF600E18B07 /* MLBaseWebViewHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945312011CD75AF600E18B07 /* MLBaseWebViewHolder.swift */; };
+		945312051CD7C03E00E18B07 /* MLViewControllerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945312041CD7C03E00E18B07 /* MLViewControllerVM.swift */; };
 		C3A2EB3C54D7914970848876 /* Pods_MattLangan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D83D65DE21F24D4EC15076 /* Pods_MattLangan.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +39,7 @@
 		88D83D65DE21F24D4EC15076 /* Pods_MattLangan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MattLangan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		945311C11CD6934500E18B07 /* MattLangan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MattLangan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		945311C41CD6934500E18B07 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		945311C61CD6934500E18B07 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		945311C61CD6934500E18B07 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../MattLangan/ViewController.swift; sourceTree = "<group>"; };
 		945311C91CD6934500E18B07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		945311CB1CD6934500E18B07 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		945311CE1CD6934500E18B07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,11 +50,12 @@
 		945311EA1CD694E800E18B07 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		945311EF1CD6959D00E18B07 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		945311F31CD7129B00E18B07 /* String+MattLangan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+MattLangan.swift"; path = "MattLangan/String+MattLangan.swift"; sourceTree = "<group>"; };
-		945311F51CD714AE00E18B07 /* MLBaseVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLBaseVM.swift; path = MVVM/MLBaseVM.swift; sourceTree = "<group>"; };
+		945311F51CD714AE00E18B07 /* MLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLParser.swift; path = MVVM/MLParser.swift; sourceTree = "<group>"; };
 		945311FA1CD73D5300E18B07 /* MLJSONMentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLJSONMentions.swift; path = JSON/MLJSONMentions.swift; sourceTree = "<group>"; };
 		945311FD1CD7429900E18B07 /* MLJSONEmoticons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLJSONEmoticons.swift; path = JSON/MLJSONEmoticons.swift; sourceTree = "<group>"; };
 		945311FF1CD7441200E18B07 /* MLJSONLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLJSONLinks.swift; path = JSON/MLJSONLinks.swift; sourceTree = "<group>"; };
 		945312011CD75AF600E18B07 /* MLBaseWebViewHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLBaseWebViewHolder.swift; path = MVVM/MLBaseWebViewHolder.swift; sourceTree = "<group>"; };
+		945312041CD7C03E00E18B07 /* MLViewControllerVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLViewControllerVM.swift; sourceTree = "<group>"; };
 		DB44C96A8BD034ED1A74AE7B /* Pods-MattLangan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MattLangan.release.xcconfig"; path = "Pods/Target Support Files/Pods-MattLangan/Pods-MattLangan.release.xcconfig"; sourceTree = "<group>"; };
 		EE240A99314BFFAD4F7682A5 /* Pods-MattLangan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MattLangan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MattLangan/Pods-MattLangan.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,12 +99,9 @@
 		945311B81CD6934500E18B07 = {
 			isa = PBXGroup;
 			children = (
-				945311FC1CD73D5A00E18B07 /* JSON */,
-				945311F71CD714B400E18B07 /* MVVM */,
-				945311F21CD7127200E18B07 /* Extensions */,
 				945311C31CD6934500E18B07 /* MattLangan */,
-				945311D81CD6934500E18B07 /* MattLanganTests */,
 				945311E41CD6936900E18B07 /* Vendor */,
+				945311D81CD6934500E18B07 /* MattLanganTests */,
 				945311C21CD6934500E18B07 /* Products */,
 				945311EF1CD6959D00E18B07 /* Podfile */,
 				84795E16499502ED008C5E5E /* Pods */,
@@ -122,8 +121,11 @@
 		945311C31CD6934500E18B07 /* MattLangan */ = {
 			isa = PBXGroup;
 			children = (
+				945311FC1CD73D5A00E18B07 /* JSON */,
+				945311F71CD714B400E18B07 /* MVVM */,
+				945311F21CD7127200E18B07 /* Extensions */,
+				945312031CD7644000E18B07 /* ViewControllers */,
 				945311C41CD6934500E18B07 /* AppDelegate.swift */,
-				945311C61CD6934500E18B07 /* ViewController.swift */,
 				945311C81CD6934500E18B07 /* Main.storyboard */,
 				945311CB1CD6934500E18B07 /* Assets.xcassets */,
 				945311CD1CD6934500E18B07 /* LaunchScreen.storyboard */,
@@ -164,15 +166,18 @@
 				945311F31CD7129B00E18B07 /* String+MattLangan.swift */,
 			);
 			name = Extensions;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		945311F71CD714B400E18B07 /* MVVM */ = {
 			isa = PBXGroup;
 			children = (
-				945311F51CD714AE00E18B07 /* MLBaseVM.swift */,
+				945311F51CD714AE00E18B07 /* MLParser.swift */,
 				945312011CD75AF600E18B07 /* MLBaseWebViewHolder.swift */,
+				945312041CD7C03E00E18B07 /* MLViewControllerVM.swift */,
 			);
 			name = MVVM;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		945311FC1CD73D5A00E18B07 /* JSON */ = {
@@ -183,7 +188,17 @@
 				945311FF1CD7441200E18B07 /* MLJSONLinks.swift */,
 			);
 			name = JSON;
+			path = ..;
 			sourceTree = "<group>";
+		};
+		945312031CD7644000E18B07 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				945311C61CD6934500E18B07 /* ViewController.swift */,
+			);
+			name = ViewControllers;
+			path = MattLanganTests;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -357,10 +372,11 @@
 				945311EE1CD694E800E18B07 /* StringExtensions.swift in Sources */,
 				945311FB1CD73D5300E18B07 /* MLJSONMentions.swift in Sources */,
 				945311C71CD6934500E18B07 /* ViewController.swift in Sources */,
+				945312051CD7C03E00E18B07 /* MLViewControllerVM.swift in Sources */,
 				945311C51CD6934500E18B07 /* AppDelegate.swift in Sources */,
 				945311F41CD7129B00E18B07 /* String+MattLangan.swift in Sources */,
 				945312021CD75AF600E18B07 /* MLBaseWebViewHolder.swift in Sources */,
-				945311F61CD714AE00E18B07 /* MLBaseVM.swift in Sources */,
+				945311F61CD714AE00E18B07 /* MLParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

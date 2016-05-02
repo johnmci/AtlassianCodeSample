@@ -17,7 +17,7 @@
  
  Other thoughts  Yacc  (yet another compiler complier) and build a parser to extract the three types, but that seems a bit heavyweight 
  
- The MLBaseVM uses Unique to get mentions, urls, Emoticons. However in doing this we lose the order of occurance in the input string as it converts to Set then to Array
+ The MLParser uses Unique to get mentions, urls, Emoticons. However in doing this we lose the order of occurance in the input string as it converts to Set then to Array
  */
  
 import XCTest
@@ -130,52 +130,52 @@ class MattLanganTests: XCTestCase {
     }
 
     //Basic checks here for sanity
-    func testGetMentionFromMLBaseVM() {
-        let mvvm = MLBaseVM(input:"@john",fetchURLTitlesOnCompletion: nil)
+    func testGetMentionFromMLParser() {
+        let mvvm = MLParser(input:"@john",fetchURLTitlesOnCompletion: nil)
         XCTAssertEqual(mvvm.mentions![0],"john")
     }
     
-    func testGetUniqueMentionFromMLBaseVM() {
-        let mvvm2 = MLBaseVM(input:"@john @harry",fetchURLTitlesOnCompletion: nil)
+    func testGetUniqueMentionFromMLParser() {
+        let mvvm2 = MLParser(input:"@john @harry",fetchURLTitlesOnCompletion: nil)
         let sortedByName = mvvm2.mentions!.sort(<)
         
         XCTAssertEqual(sortedByName[0],"harry")
         XCTAssertEqual(sortedByName[1],"john")
         
-        let mvvmOne = MLBaseVM(input:"@john @john",fetchURLTitlesOnCompletion: nil)
+        let mvvmOne = MLParser(input:"@john @john",fetchURLTitlesOnCompletion: nil)
         XCTAssertEqual(mvvmOne.mentions!.count,1)
     }
 
     
-    func testGetEmoticonsFromMLBaseVM() {
-        let mvvm = MLBaseVM(input:"(awthanks)",fetchURLTitlesOnCompletion: nil)
+    func testGetEmoticonsFromMLParser() {
+        let mvvm = MLParser(input:"(awthanks)",fetchURLTitlesOnCompletion: nil)
         XCTAssertEqual(mvvm.emoticons![0],"awthanks")
     }
 
-    func testGetUniqueEmoticonsFromMLBaseVM() {
-        let mvvm2 = MLBaseVM(input:"(awthanks)(x)",fetchURLTitlesOnCompletion: nil)
+    func testGetUniqueEmoticonsFromMLParser() {
+        let mvvm2 = MLParser(input:"(awthanks)(x)",fetchURLTitlesOnCompletion: nil)
         let sortedByName = mvvm2.emoticons!.sort(<)
         
         XCTAssertEqual(sortedByName[0],"awthanks")
         XCTAssertEqual(sortedByName[1],"x")
         
-        let mvvmOne = MLBaseVM(input:"(awthanks)(awthanks)",fetchURLTitlesOnCompletion: nil)
+        let mvvmOne = MLParser(input:"(awthanks)(awthanks)",fetchURLTitlesOnCompletion: nil)
         XCTAssertEqual(mvvmOne.emoticons!.count,1)
     }
     
-    func testGetUrlsFromMLBaseVM() {
-        let mvvm = MLBaseVM(input:"https://www.example.com",fetchURLTitlesOnCompletion: nil)
+    func testGetUrlsFromMLParser() {
+        let mvvm = MLParser(input:"https://www.example.com",fetchURLTitlesOnCompletion: nil)
         XCTAssertEqual(mvvm.urls![0].absoluteString,"https://www.example.com")
     }
     
-    func testGetUniqueUrlsFromMLBaseVM() {
-        let mvvm2 = MLBaseVM(input:"https://www.example.com https://www.atlassian.com ",fetchURLTitlesOnCompletion: nil)
+    func testGetUniqueUrlsFromMLParser() {
+        let mvvm2 = MLParser(input:"https://www.example.com https://www.atlassian.com ",fetchURLTitlesOnCompletion: nil)
         let sortedByName = mvvm2.urls!.sort() {return $0.absoluteString < $1.absoluteString}
         
         XCTAssertEqual(sortedByName[0].absoluteString,"https://www.atlassian.com")
         XCTAssertEqual(sortedByName[1].absoluteString,"https://www.example.com")
         
-        let mvvmOne = MLBaseVM(input:"https://www.atlassian.com https://www.atlassian.com",fetchURLTitlesOnCompletion: nil)
+        let mvvmOne = MLParser(input:"https://www.atlassian.com https://www.atlassian.com",fetchURLTitlesOnCompletion: nil)
         XCTAssertEqual(mvvmOne.urls!.count,1)
     }
 
@@ -183,31 +183,31 @@ class MattLanganTests: XCTestCase {
     //Ok there are some other tests here like 500, or title string not found in html, but need a server to provide those, could of course use use Mocks for this, but not today
     
     func testGetURLTitleForAtlassian() {
-        let titleString = self.fetchTitleStringFromMLBaseVM("https://www.atlassian.com")
+        let titleString = self.fetchTitleStringFromMLParser("https://www.atlassian.com")
        XCTAssertEqual(titleString,"Software Development and Collaboration Tools | Atlassian")
     }
     
     func testGetURLTitleForApple() {
-        let titleString = self.fetchTitleStringFromMLBaseVM("https://www.apple.com")
+        let titleString = self.fetchTitleStringFromMLParser("https://www.apple.com")
          XCTAssertEqual(titleString,"Apple")
     }
 
     
     func testGetURLTitleForBadURL() {
-        let titleString = self.fetchTitleStringFromMLBaseVM("https://www.joesmith.org")
+        let titleString = self.fetchTitleStringFromMLParser("https://www.joesmith.org")
         XCTAssertEqual(titleString,"Status: -1003: A server with the specified hostname could not be found.")
     }
     
     func testGetURLTitleForBadJapanURL() {
-        let titleString = self.fetchTitleStringFromMLBaseVM("https://JP納豆.例.jp/引き割り/おいしい.html")
+        let titleString = self.fetchTitleStringFromMLParser("https://JP納豆.例.jp/引き割り/おいしい.html")
         XCTAssertEqual(titleString,"Status: -1200: An SSL error has occurred and a secure connection to the server cannot be made.")
     }
     
-    func fetchTitleStringFromMLBaseVM(host:String) -> String? {
+    func fetchTitleStringFromMLParser(host:String) -> String? {
         var titleString:String?
         let theExpectation = self.expectationWithDescription("Get a url")
         
-        let mvvm = MLBaseVM(input: host,fetchURLTitlesOnCompletion: nil)
+        let mvvm = MLParser(input: host,fetchURLTitlesOnCompletion: nil)
         
         //Normally we would set the fetchURLTitlesOnCompletion block but here we need to manually do the fetchTitleStringFromHost so we can wait on theExpectation
         mvvm.fetchTitleStringFromHost(mvvm.urls![0].absoluteString) { (urlString, aTitleString) in

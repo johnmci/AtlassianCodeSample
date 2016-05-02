@@ -7,7 +7,7 @@
 //
 
 //This was created to handle the headless use of WKWebView to get the title after Safari/webkit has rendered the page. 
-//navigationDelegate is weak, so the strong relationship is to webSite, but as mentioned in MLBaseVM we have to hold onto this instance to prevent a GC from happening
+//navigationDelegate is weak, so the strong relationship is to webSite, but as mentioned in MLParser we have to hold onto this instance to prevent a GC from happening
 
 import Foundation
 import WebKit
@@ -67,6 +67,7 @@ class MLBaseWebViewHolder:NSObject, WKNavigationDelegate {
      @param navigation The navigation.
      */
     func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        //TODO: we are returning the final redirected URL here, is that correct?
         onCompletion!((webView.URL?.absoluteString)!,webView.title)
     }
     
