@@ -14,6 +14,7 @@ class MLBaseVM {
     var emoticons:[String]?
     var urls:[NSURL]?
     var urlTitles:[String?]?
+    var urlTitlesFetched = 0
     
     convenience init(input:String, fetchURLTitlesOnCompletion: ((MLBaseVM) -> Void)? ) {
         self.init()
@@ -28,9 +29,13 @@ class MLBaseVM {
         
         urlTitles = [String?](count: urls.count, repeatedValue: nil)
         for i in 0..<urls.count {
+            //when we return we have the titlestring and the index value, due to delay these can come back in any order
+            //we count these returns and compare to total, because this runs on the main thread we are "thread safe" so the urlTitlesFetched are sane
+            
             self.fetchTitleStringFromHost(urls[i].absoluteString, index: i, onCompletion: { (titleString, targetIndex) in
                 self.urlTitles![targetIndex] = titleString
-                if i == (self.urls!.count-1) {
+                self.urlTitlesFetched = self.urlTitlesFetched + 1
+                if self.urlTitlesFetched == urls.count {
                     fetchURLTitlesOnCompletionNotNil(self)
                 }
             })
@@ -66,7 +71,7 @@ class MLBaseVM {
                 return nil
         }
         let start = nonNilTitleRange.startIndex.advancedBy(titleMarker.length) //Ok it's a duplication statement collides with the guard clause usage
-        let titleRange = Range.init(start..<nonNilTitleEndRange.startIndex.advancedBy(-1))
+        let titleRange = Range.init(start..<nonNilTitleEndRange.startIndex)
         let titleString = nonNilHtmlString.substringWithRange(titleRange)
         return titleString
     }

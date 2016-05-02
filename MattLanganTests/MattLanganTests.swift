@@ -185,8 +185,15 @@ class MattLanganTests: XCTestCase {
     func testGetURLTitleForAtlassian() {
         let titleString = self.fetchTitleStringFromMLBaseVM("https://www.atlassian.com")
         //Shrug we dont' handle the data being nil due to time out or to bad data on host
-       XCTAssertEqual(titleString,"Software Development and Collaboration Tools | Atlassia")
+       XCTAssertEqual(titleString,"Software Development and Collaboration Tools | Atlassian")
     }
+    
+    func testGetURLTitleForApple() {
+        let titleString = self.fetchTitleStringFromMLBaseVM("https://www.apple.com")
+        //Shrug we dont' handle the data being nil due to time out or to bad data on host
+        XCTAssertEqual(titleString,"Apple")
+    }
+
     
     func testGetURLTitleForBadURL() {
         let titleString = self.fetchTitleStringFromMLBaseVM("https://www.joesmith.org")
