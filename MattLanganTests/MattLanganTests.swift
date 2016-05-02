@@ -10,13 +10,19 @@
 
 /*
  The  Swift String Tools github code sample was choosen as it was the first one found that many things we wanted and had an MIT licence
- However it is not a Pod (etc) so maintence is an issue. 
+ However it is not a Pod (etc) so maintence is an issue. Also he seemed have ignored some warnings ("lazy programmer")
  
  Generally I'd look for something that is limited in scope, seems well liked, clean code, few complaints, and active updating, and as pod etc
+ But that task could take a few hours. Obviously I could have just grabbed some code snippets, but want to show where they came from
+ 
  Other thoughts  Yacc  (yet another compiler complier) and build a parser to extract the three types, but that seems a bit heavyweight 
+ 
+ The MLBaseVM uses Unique to get mentions, urls, Emoticons. However in doing this we lose the order of occurance in the string as it converts to Set then to Array
  */
  
 import XCTest
+import Alamofire
+
 @testable import MattLangan
 class MattLanganTests: XCTestCase {
     
@@ -62,7 +68,7 @@ class MattLanganTests: XCTestCase {
         //Check for Unique
         XCTAssertEqual("@john @harry ".getUniqueMentionsOrNil()!.count,2)
         XCTAssertEqual("@john @john ".getUniqueMentionsOrNil()!.count,1)
-        
+        XCTAssertNil("@(john)".getUniqueMentionsOrNil())
     }
     
     func testEmoticons() {
@@ -91,7 +97,8 @@ class MattLanganTests: XCTestCase {
         //Check for Unique
         XCTAssertEqual("(awthanks) (x)".getUniqueEmoticonsOrNil()!.count,2)
         XCTAssertEqual("(awthanks) (awthanks)".getUniqueEmoticonsOrNil()!.count,1)
-        XCTAssertEqual("(awthanks) (awthanks)".getEmoticonsOrNil()![0],"awthanks")
+        XCTAssertEqual("(awthanks) (awthanks)".getUniqueEmoticonsOrNil()![0],"awthanks")
+        XCTAssertNil("(a".getUniqueEmoticonsOrNil())
 
         //check length cutoff at 15
         XCTAssertNotNil("(123456789012345)".getEmoticonsOrNil())
@@ -99,7 +106,8 @@ class MattLanganTests: XCTestCase {
     }
     
     func testGetURls() {
-        //check valid values
+        //check valid values mind Apple is doing this heavy lifting so nothing we can fix 
+        
         XCTAssertNotNil("(http://www.example.com)".getURLsOrNil())
         
         //confirm http & https (of course)
@@ -111,6 +119,7 @@ class MattLanganTests: XCTestCase {
         XCTAssertEqual("https://www.example.com http://www.apple.com".getURLsOrNil()![1].absoluteString,"http://www.apple.com")
         XCTAssertEqual("https://www.example.com https://www.example.com".getURLsOrNil()!.count,2)
         XCTAssertEqual("https://www.example.com https://www.example.com".getUniqueURLsOrNil()!.count,1)
+        XCTAssertEqual("https://www.example.com https://www.example.com".getUniqueURLsOrNil()![0].absoluteString,"https://www.example.com")
         
         //Apple does respect multi-lingual addresses
         
@@ -119,71 +128,87 @@ class MattLanganTests: XCTestCase {
         XCTAssertNotNil("http://JP納豆.例.jp/引き割り/おいしい.html".getURLsOrNil())
         XCTAssertEqual("http://JP納豆.例.jp/引き割り/おいしい.html".getURLsOrNil()![0].absoluteString,"http://xn--jp-cd2fp15c.xn--fsq.jp/%E5%BC%95%E3%81%8D%E5%89%B2%E3%82%8A/%E3%81%8A%E3%81%84%E3%81%97%E3%81%84.html")
     }
-}
+
+    //Basic checks here for sanity
+    func testGetMentionFromMLBaseVM() {
+        let mvvm = MLBaseVM(input:"@john",fetchURLTitles: false)
+        XCTAssertEqual(mvvm.mentions![0],"john")
+    }
+    
+    func testGetUniqueMentionFromMLBaseVM() {
+        let mvvm2 = MLBaseVM(input:"@john @harry",fetchURLTitles: false)
+        let sortedByName = mvvm2.mentions!.sort(<)
+        
+        XCTAssertEqual(sortedByName[0],"harry")
+        XCTAssertEqual(sortedByName[1],"john")
+        
+        let mvvmOne = MLBaseVM(input:"@john @john",fetchURLTitles: false)
+        XCTAssertEqual(mvvmOne.mentions!.count,1)
+    }
+
+    
+    func testGetEmoticonsFromMLBaseVM() {
+        let mvvm = MLBaseVM(input:"(awthanks)",fetchURLTitles: false)
+        XCTAssertEqual(mvvm.emoticons![0],"awthanks")
+    }
+
+    func testGetUniqueEmoticonsFromMLBaseVM() {
+        let mvvm2 = MLBaseVM(input:"(awthanks)(x)",fetchURLTitles: false)
+        let sortedByName = mvvm2.emoticons!.sort(<)
+        
+        XCTAssertEqual(sortedByName[0],"awthanks")
+        XCTAssertEqual(sortedByName[1],"x")
+        
+        let mvvmOne = MLBaseVM(input:"(awthanks)(awthanks)",fetchURLTitles: false)
+        XCTAssertEqual(mvvmOne.emoticons!.count,1)
+    }
+    
+    func testGetUrlsFromMLBaseVM() {
+        let mvvm = MLBaseVM(input:"https://www.example.com",fetchURLTitles: false)
+        XCTAssertEqual(mvvm.urls![0].absoluteString,"https://www.example.com")
+    }
+    
+    func testGetUniqueUrlsFromMLBaseVM() {
+        let mvvm2 = MLBaseVM(input:"https://www.example.com https://www.atlassian.com ",fetchURLTitles: false)
+        let sortedByName = mvvm2.urls!.sort() {return $0.absoluteString < $1.absoluteString}
+        
+        XCTAssertEqual(sortedByName[0].absoluteString,"https://www.atlassian.com")
+        XCTAssertEqual(sortedByName[1].absoluteString,"https://www.example.com")
+        
+        let mvvmOne = MLBaseVM(input:"https://www.atlassian.com https://www.atlassian.com",fetchURLTitles: false)
+        XCTAssertEqual(mvvmOne.urls!.count,1)
+    }
 
 
-extension String {
+    //Ok there are some other tests here like 500, or title string not found in html, but need a server to provide those, could of course use use Mocks for this, but not today
     
-    //emoticons which are alphanumeric strings, no longer than 15 characters, contained in parenthesis.
-    //https://www.hipchat.com/emoticons  examples do not use numbers!
+    func testGetURLTitleForAtlassian() {
+        let titleString = self.fetchTitleStringFromMLBaseVM("https://www.atlassian.com")
+        //Shrug we dont' handle the data being nil due to time out or to bad data on host
+       XCTAssertEqual(titleString,"Software Development and Collaboration Tools | Atlassia")
+    }
     
-    func getEmoticons() -> [String]? {
-        let emoticonsDetector = try? NSRegularExpression(pattern: "\\((\\w{1,15})\\)", options: NSRegularExpressionOptions.CaseInsensitive)
-        let results = emoticonsDetector?.matchesInString(self, options: NSMatchingOptions.WithoutAnchoringBounds, range: NSMakeRange(0, self.utf16.count)).map { $0 }
+    func testGetURLTitleForBadURL() {
+        let titleString = self.fetchTitleStringFromMLBaseVM("https://www.joesmith.org")
+        XCTAssertEqual(titleString,"Status: -1003: A server with the specified hostname could not be found.")
+    }
+    
+    func testGetURLTitleForBadJapanURL() {
+        let titleString = self.fetchTitleStringFromMLBaseVM("https://JP納豆.例.jp/引き割り/おいしい.html")
+        XCTAssertEqual(titleString,"Status: -1200: An SSL error has occurred and a secure connection to the server cannot be made.")
+    }
+    
+    func fetchTitleStringFromMLBaseVM(host:String) -> String? {
+        var titleString:String?
+        let theExpectation = self.expectationWithDescription("Get a url")
         
-        return results?.map({
-            (self as NSString).substringWithRange($0.rangeAtIndex(1))
-        })
-    }
-    
-    func getEmoticonsOrNil() -> [String]? {
-        let results = self.getEmoticons()
-        if results == nil || results?.isEmpty == true {
-            return nil
+        let mvvm = MLBaseVM(input: host,fetchURLTitles: false)
+        //Normally we would set the fetchURLTItles to true, but here we need to manually do the fetchTitleStringFromHost so we can wait on theExpectation
+        mvvm.fetchTitleStringFromHost(mvvm.urls![0].absoluteString, index: 0) { (aTitleString, index) in
+            titleString = aTitleString
+            theExpectation.fulfill()
         }
-        return results
-    }
-    
-    func getUniqueEmoticonsOrNil() -> [String]? {
-        guard let results = self.getEmoticonsOrNil() else {
-            return nil
-        }
-        return Array(Set(results))
-    }
-    
-    /* The vendor code getMentions returns nil (maybe) or an empty string array. This is a hassle, so supply a method that returns nil if nil or empty */
-    
-    func getMentionsOrNil() -> [String]? {
-        let results = self.getMentions()
-        if results == nil || results?.isEmpty == true {
-            return nil
-        }
-        return results
-    }
-    
-    func getUniqueMentionsOrNil() -> [String]? {
-        guard let results = self.getMentionsOrNil() else {
-            return nil
-        }
-        return Array(Set(results))
-    }
-    
-    func getURLsOrNil() -> [NSURL]? {
-        let detector = try? NSDataDetector(types: NSTextCheckingType.Link.rawValue)
-        
-        let links = detector?.matchesInString(self, options: NSMatchingOptions.ReportCompletion, range: NSMakeRange(0, length)).map {$0 }
-        
-        return links?.filter { link in
-            return link.URL != nil
-            }.map { link -> NSURL in
-                return link.URL!
-        }
-    }
-    
-    func getUniqueURLsOrNil() -> [NSURL]? {
-        guard let results = self.getURLsOrNil() else {
-            return nil
-        }
-        return Array(Set(results))
+        self.waitForExpectationsWithTimeout(15.0, handler:nil)
+        return titleString
     }
 }

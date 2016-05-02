@@ -15,6 +15,8 @@
 		945311DA1CD6934500E18B07 /* MattLanganTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311D91CD6934500E18B07 /* MattLanganTests.swift */; };
 		945311EE1CD694E800E18B07 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311EA1CD694E800E18B07 /* StringExtensions.swift */; };
 		945311F01CD6959D00E18B07 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 945311EF1CD6959D00E18B07 /* Podfile */; };
+		945311F41CD7129B00E18B07 /* String+MattLangan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311F31CD7129B00E18B07 /* String+MattLangan.swift */; };
+		945311F61CD714AE00E18B07 /* MLBaseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311F51CD714AE00E18B07 /* MLBaseVM.swift */; };
 		C3A2EB3C54D7914970848876 /* Pods_MattLangan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D83D65DE21F24D4EC15076 /* Pods_MattLangan.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +44,8 @@
 		945311DB1CD6934500E18B07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		945311EA1CD694E800E18B07 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		945311EF1CD6959D00E18B07 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		945311F31CD7129B00E18B07 /* String+MattLangan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+MattLangan.swift"; path = "MattLangan/String+MattLangan.swift"; sourceTree = "<group>"; };
+		945311F51CD714AE00E18B07 /* MLBaseVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLBaseVM.swift; path = MVVM/MLBaseVM.swift; sourceTree = "<group>"; };
 		DB44C96A8BD034ED1A74AE7B /* Pods-MattLangan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MattLangan.release.xcconfig"; path = "Pods/Target Support Files/Pods-MattLangan/Pods-MattLangan.release.xcconfig"; sourceTree = "<group>"; };
 		EE240A99314BFFAD4F7682A5 /* Pods-MattLangan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MattLangan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MattLangan/Pods-MattLangan.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +89,8 @@
 		945311B81CD6934500E18B07 = {
 			isa = PBXGroup;
 			children = (
+				945311F71CD714B400E18B07 /* MVVM */,
+				945311F21CD7127200E18B07 /* Extensions */,
 				945311C31CD6934500E18B07 /* MattLangan */,
 				945311D81CD6934500E18B07 /* MattLanganTests */,
 				945311E41CD6936900E18B07 /* Vendor */,
@@ -143,6 +149,22 @@
 			path = "MattLangan/Vendor/Swift-String-Tools-master";
 			sourceTree = "<group>";
 		};
+		945311F21CD7127200E18B07 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				945311F31CD7129B00E18B07 /* String+MattLangan.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		945311F71CD714B400E18B07 /* MVVM */ = {
+			isa = PBXGroup;
+			children = (
+				945311F51CD714AE00E18B07 /* MLBaseVM.swift */,
+			);
+			name = MVVM;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -156,6 +178,7 @@
 				945311BF1CD6934500E18B07 /* Resources */,
 				4211C83A957AC29DBEFD3AC0 /* Embed Pods Frameworks */,
 				8A8F3FFD37ACCA86FED4FCA8 /* Copy Pods Resources */,
+				945311F11CD6C38D00E18B07 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -274,6 +297,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MattLangan/Pods-MattLangan-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		945311F11CD6C38D00E18B07 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\(  -name \"*.h\" -or -name \"*.m\" -or -name \"*.mm\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"\n";
+		};
 		F1E3F626D02BACA35C743894 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -299,6 +335,8 @@
 				945311EE1CD694E800E18B07 /* StringExtensions.swift in Sources */,
 				945311C71CD6934500E18B07 /* ViewController.swift in Sources */,
 				945311C51CD6934500E18B07 /* AppDelegate.swift in Sources */,
+				945311F41CD7129B00E18B07 /* String+MattLangan.swift in Sources */,
+				945311F61CD714AE00E18B07 /* MLBaseVM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
