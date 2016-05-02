@@ -61,11 +61,16 @@ extension String {
         
         //TODO: This is the original code but could be rewrite this as a flatMap
         
-        return links?.filter { link in
+        let resolvedLinks = links?.filter { link in
             return link.URL != nil
             }.map { link -> NSURL in
                 return link.URL!
         }
+        
+        if resolvedLinks!.count > 0 {
+            return resolvedLinks
+        }
+        return nil
     }
     
     func getUniqueURLsOrNil() -> [NSURL]? {
