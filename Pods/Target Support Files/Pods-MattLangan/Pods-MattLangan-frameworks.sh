@@ -86,12 +86,14 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-MattLangan/Alamofire.framework"
   install_framework "Pods-MattLangan/AlamofireNetworkActivityIndicator.framework"
+  install_framework "Pods-MattLangan/ObjectMapper.framework"
   install_framework "Pods-MattLangan/RxCocoa.framework"
   install_framework "Pods-MattLangan/RxSwift.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-MattLangan/Alamofire.framework"
   install_framework "Pods-MattLangan/AlamofireNetworkActivityIndicator.framework"
+  install_framework "Pods-MattLangan/ObjectMapper.framework"
   install_framework "Pods-MattLangan/RxCocoa.framework"
   install_framework "Pods-MattLangan/RxSwift.framework"
 fi
