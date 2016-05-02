@@ -21,6 +21,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupGetURLTitlesTap()
+        setupDynamicTextInput()
+    }
+    
+    private func setupGetURLTitlesTap() {
         tapHereForUrlTitles.rx_tap.subscribeNext { [weak self] () in
             guard let strongSelf = self else {
                 return
@@ -28,8 +33,20 @@ class ViewController: UIViewController {
             let _ = MLBaseVM(input: strongSelf.textInput.text, fetchURLTitlesOnCompletion: { (thisMvvm) in
                 strongSelf.outputAreaForResults.text = thisMvvm.rawTextStringForDislay()
             })
+            }
+            .addDisposableTo(disposeBag)
+    }
+    
+    private func setupDynamicTextInput() {
+        let _ = textInput.rx_text
+            .distinctUntilChanged()
+            .subscribeNext { [weak self] (inputString) in
+                guard let strongSelf = self else {
+                    return
+                }
+                let mvvm = MLBaseVM(input: inputString, fetchURLTitlesOnCompletion: nil)
+                strongSelf.outputAreaForResults.text = mvvm.rawTextStringForDislay()
         }
-        .addDisposableTo(disposeBag)
     }
 }
 
