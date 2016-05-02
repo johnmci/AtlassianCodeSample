@@ -211,7 +211,7 @@ class MattLanganTests: XCTestCase {
         
         let mvvm = MLBaseVM(input: host,fetchURLTitlesOnCompletion: nil)
         //Normally we would set the fetchURLTItles to true, but here we need to manually do the fetchTitleStringFromHost so we can wait on theExpectation
-        mvvm.fetchTitleStringFromHost(mvvm.urls![0].absoluteString, index: 0) { (aTitleString, index) in
+        mvvm.fetchTitleStringFromHost(mvvm.urls![0].absoluteString, index: 0) { (urlString,aTitleString, index) in
             titleString = aTitleString
             theExpectation.fulfill()
         }

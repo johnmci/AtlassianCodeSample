@@ -5,4 +5,5 @@ target 'MattLangan' do
     pod 'AlamofireNetworkActivityIndicator'
     pod 'RxSwift'
     pod 'RxCocoa'
+    pod 'ObjectMapper'
 end

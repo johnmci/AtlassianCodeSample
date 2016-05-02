@@ -48,7 +48,7 @@
                                 <rect key="frame" x="20" y="113" width="179" height="30"/>
                                 <state key="normal" title="Tap here to get URL Titles"/>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="X7p-Cb-Xe4">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="X7p-Cb-Xe4">
                                 <rect key="frame" x="20" y="149" width="560" height="451"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>

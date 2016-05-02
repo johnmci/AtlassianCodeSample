@@ -8,12 +8,13 @@
 
 import Foundation
 import Alamofire
+import ObjectMapper
 
 class MLBaseVM {
     var mentions:[String]?
     var emoticons:[String]?
     var urls:[NSURL]?
-    var urlTitles:[String?]?
+    var urlTitles = [(urlString:String,titleString:String?)]()  //Could use a Struct here, but let's explore Named Tuples
     var urlTitlesFetched = 0
     
     convenience init(input:String, fetchURLTitlesOnCompletion: ((MLBaseVM) -> Void)? ) {
@@ -21,19 +22,18 @@ class MLBaseVM {
         mentions = input.getUniqueMentionsOrNil()
         emoticons = input.getUniqueEmoticonsOrNil()
         urls = input.getUniqueURLsOrNil()
-        urlTitles = nil
         guard let urls = urls, let fetchURLTitlesOnCompletionNotNil = fetchURLTitlesOnCompletion where urls.count > 0 else {
             fetchURLTitlesOnCompletion?(self)
             return
         }
-        
-        urlTitles = [String?](count: urls.count, repeatedValue: nil)
+
         for i in 0..<urls.count {
+            urlTitles.append(("",nil))
             //when we return we have the titlestring and the index value, due to delay these can come back in any order
             //we count these returns and compare to total, because this runs on the main thread we are "thread safe" so the urlTitlesFetched are sane
             
-            self.fetchTitleStringFromHost(urls[i].absoluteString, index: i, onCompletion: { (titleString, targetIndex) in
-                self.urlTitles![targetIndex] = titleString
+            self.fetchTitleStringFromHost(urls[i].absoluteString, index: i, onCompletion: { (urlString, titleString, targetIndex) in
+                self.urlTitles[targetIndex] = (urlString,titleString)
                 self.urlTitlesFetched = self.urlTitlesFetched + 1
                 if self.urlTitlesFetched == urls.count {
                     fetchURLTitlesOnCompletionNotNil(self)
@@ -43,18 +43,45 @@ class MLBaseVM {
     }
     
     func rawTextStringForDislay() -> String {
-        return "\(mentions) " + "\(emoticons) " + "\(urls) " + "\(urlTitles)"
+        var returnString = ""
+        if let mentions = mentions {
+            let jsonMentions = MLJSONMentions(mentions:mentions)
+            let jsonString = Mapper().toJSONString(jsonMentions, prettyPrint: true)!
+            returnString = returnString + jsonString
+        }
+        
+        if let emoticons = emoticons {
+            let jsonMentions = MLJSONEmoticons(emoticons:emoticons)
+            let jsonString = Mapper().toJSONString(jsonMentions, prettyPrint: true)!
+            returnString = returnString + "\n" + jsonString
+        }
+
+        if urls != nil {
+            let links = self.urlTitles.map({ (linkTuple) -> MLJSONUrls in
+                MLJSONUrls(url: linkTuple.urlString, title: linkTuple.titleString ?? "")
+            })
+            
+            let jsonLinks = MLJSONLinks(links:links)
+            let jsonString = Mapper().toJSONString(jsonLinks, prettyPrint: true)!
+            returnString = returnString + "\n" + jsonString
+        }
+
+        return returnString
     }
     
     //Note this could be private but need to expose for Testing
-    func fetchTitleStringFromHost(host:String, index: Int, onCompletion: (String?,Int) -> Void) {
+    
+    func fetchTitleStringFromHost(host:String, index: Int, onCompletion: (String,String?,Int) -> Void) {
         var titleString:String?
-        Alamofire.request(.GET, host.getURLsOrNil()![0].absoluteString)
+        Alamofire.request(.GET, host)
             .response { request, response, data, error in
                 titleString = self.getTitleString(data,possibleError: error)
-                onCompletion(titleString,index)
+                onCompletion(host,titleString,index)
         }
     }
+    
+    //Nice to have would be a function that understood <title> </title> but for any html keyword that uses this pattern
+    //Could also be a webpage render that might return title, but that is very heavyweight for just finding the title
     
     private func getTitleString(data:NSData?,possibleError:NSError?) -> String? {
         if let actualError = possibleError {
@@ -76,4 +103,3 @@ class MLBaseVM {
         return titleString
     }
 }
-
