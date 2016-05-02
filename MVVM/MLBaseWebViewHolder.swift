@@ -6,20 +6,21 @@
 //  Copyright © 2016 Corporate Smalltalk Consulting Ltd. All rights reserved.
 //
 
+//This was created to handle the headless use of WKWebView to get the title after Safari/webkit has rendered the page. 
+//navigationDelegate is weak, so the strong relationship is to webSite, but as mentioned in MLBaseVM we have to hold onto this instance to prevent a GC from happening
+
 import Foundation
 import WebKit
 
 class MLBaseWebViewHolder:NSObject, WKNavigationDelegate {
     var host:String!
-    var onCompletion:((String,String?,Int) -> Void)?
-    var whichIndex:Int!
+    var onCompletion:((String,String?) -> Void)?
     var webSite = WKWebView()
     
-    convenience init(host:String, index:Int, completion:(String,String?,Int) -> Void) {
+    convenience init(host:String, completion:(String,String?) -> Void) {
         self.init()
         self.host = host
         self.onCompletion = completion
-        self.whichIndex = index
         self.webSite.navigationDelegate = self
         let url = NSURL(string:host)!
         let req = NSURLRequest(URL:url)
@@ -58,7 +59,7 @@ class MLBaseWebViewHolder:NSObject, WKNavigationDelegate {
      @param error The error that occurred.
      */
     func webView(webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: NSError) {
-        onCompletion!(self.host,"Status: \(error.code): \(error.localizedDescription)",self.whichIndex)
+        onCompletion!(self.host,"Status: \(error.code): \(error.localizedDescription)")
     }
     
     /*! @abstract Invoked when a main frame navigation completes.
@@ -66,7 +67,7 @@ class MLBaseWebViewHolder:NSObject, WKNavigationDelegate {
      @param navigation The navigation.
      */
     func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
-        onCompletion!((webView.URL?.absoluteString)!,webView.title,self.whichIndex)
+        onCompletion!((webView.URL?.absoluteString)!,webView.title)
     }
     
     /*! @abstract Invoked when an error occurs during a committed main frame
@@ -76,6 +77,6 @@ class MLBaseWebViewHolder:NSObject, WKNavigationDelegate {
      @param error The error that occurred.
      */
     func webView(webView: WKWebView, didFailNavigation navigation: WKNavigation!, withError error: NSError) {
-        onCompletion!(self.host,"Status: \(error.code): \(error.localizedDescription)",self.whichIndex)
+        onCompletion!(self.host,"Status: \(error.code): \(error.localizedDescription)")
     }
 }

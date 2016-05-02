@@ -28,13 +28,14 @@ class MLBaseVM {
             return
         }
 
+        //Need urls and a completion block
+        
         for i in 0..<urls.count {
-            urlTitles.append(("",nil))
-            //when we return we have the titlestring and the index value, due to delay these can come back in any order
-            //we count these returns and compare to total, because this runs on the main thread we are "thread safe" so the urlTitlesFetched are sane
+            //when we return we have the url, titlestring, due to delay these can come back in any order
+            //we count these returns and compare to total, because this runs on the main thread we are "thread safe" so the urlTitlesFetched value is alway sane
             
-            self.fetchTitleStringFromHost(urls[i].absoluteString, index: i, onCompletion: { (urlString, titleString, targetIndex) in
-                self.urlTitles[targetIndex] = (urlString,titleString)
+            self.fetchTitleStringFromHost(urls[i].absoluteString, onCompletion: { (urlString, titleString) in
+                self.urlTitles.append((urlString,titleString))
                 self.urlTitlesFetched = self.urlTitlesFetched + 1
                 if self.urlTitlesFetched == urls.count {
                     fetchURLTitlesOnCompletionNotNil(self)
@@ -57,7 +58,7 @@ class MLBaseVM {
             returnString = returnString + "\n" + jsonString
         }
 
-        if urls != nil {
+        if let urls = urls {
             let links = self.urlTitles.map({ (linkTuple) -> MLJSONUrls in
                 MLJSONUrls(url: linkTuple.urlString, title: linkTuple.titleString ?? "")
             })
@@ -72,8 +73,8 @@ class MLBaseVM {
     
     //Note this could be private but need to expose for Testing
     
-    func fetchTitleStringFromHost(host:String, index: Int, onCompletion: (String,String?,Int) -> Void) {
-        let webSiteDelegate = MLBaseWebViewHolder(host: host, index: index, completion: onCompletion)
+    func fetchTitleStringFromHost(host:String, onCompletion: (String,String?) -> Void) {
+        let webSiteDelegate = MLBaseWebViewHolder(host: host, completion: onCompletion)
         
         // We have to hold onto the delegate object here, otherwise it will get Garbaged Collected as the logic runs on a background thread. 
         // This should be GCed when the MLBaseVM is GCed
@@ -83,12 +84,12 @@ class MLBaseVM {
  
     //This is old logic, we parsed the HTML, but this proved to be a problem because the html is not formatted
     
-    private func xfetchTitleStringFromHost(host:String, index: Int, onCompletion: (String,String?,Int) -> Void) {
+    private func xfetchTitleStringFromHost(host:String, onCompletion: (String,String?) -> Void) {
         var titleString:String?
         Alamofire.request(.GET, host)
             .response { request, response, data, error in
                 titleString = self.getTitleString(data,possibleError: error)
-                onCompletion(host,titleString,index)
+                onCompletion(host,titleString)
         }
     }
     

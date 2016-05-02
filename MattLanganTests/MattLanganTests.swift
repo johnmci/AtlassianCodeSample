@@ -17,7 +17,7 @@
  
  Other thoughts  Yacc  (yet another compiler complier) and build a parser to extract the three types, but that seems a bit heavyweight 
  
- The MLBaseVM uses Unique to get mentions, urls, Emoticons. However in doing this we lose the order of occurance in the string as it converts to Set then to Array
+ The MLBaseVM uses Unique to get mentions, urls, Emoticons. However in doing this we lose the order of occurance in the input string as it converts to Set then to Array
  */
  
 import XCTest
@@ -184,14 +184,12 @@ class MattLanganTests: XCTestCase {
     
     func testGetURLTitleForAtlassian() {
         let titleString = self.fetchTitleStringFromMLBaseVM("https://www.atlassian.com")
-        //Shrug we dont' handle the data being nil due to time out or to bad data on host
        XCTAssertEqual(titleString,"Software Development and Collaboration Tools | Atlassian")
     }
     
     func testGetURLTitleForApple() {
         let titleString = self.fetchTitleStringFromMLBaseVM("https://www.apple.com")
-        //Shrug we dont' handle the data being nil due to time out or to bad data on host
-        XCTAssertEqual(titleString,"Apple")
+         XCTAssertEqual(titleString,"Apple")
     }
 
     
@@ -210,8 +208,9 @@ class MattLanganTests: XCTestCase {
         let theExpectation = self.expectationWithDescription("Get a url")
         
         let mvvm = MLBaseVM(input: host,fetchURLTitlesOnCompletion: nil)
-        //Normally we would set the fetchURLTItles to true, but here we need to manually do the fetchTitleStringFromHost so we can wait on theExpectation
-        mvvm.fetchTitleStringFromHost(mvvm.urls![0].absoluteString, index: 0) { (urlString,aTitleString, index) in
+        
+        //Normally we would set the fetchURLTitlesOnCompletion block but here we need to manually do the fetchTitleStringFromHost so we can wait on theExpectation
+        mvvm.fetchTitleStringFromHost(mvvm.urls![0].absoluteString) { (urlString, aTitleString) in
             titleString = aTitleString
             theExpectation.fulfill()
         }
