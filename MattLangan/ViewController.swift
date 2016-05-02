@@ -7,12 +7,29 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController {
 
+    var disposeBag = DisposeBag()
+
+    @IBOutlet weak var enterTextBelow: UILabel!
+    @IBOutlet weak var textInput: UITextView!
+    @IBOutlet weak var tapHereForUrlTitles: UIButton!
+    @IBOutlet weak var outputAreaForResults: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        tapHereForUrlTitles.rx_tap.subscribeNext { [weak self] () in
+            guard let strongSelf = self else {
+                return
+            }
+            let _ = MLBaseVM(input: strongSelf.textInput.text, fetchURLTitlesOnCompletion: { (thisMvvm) in
+                strongSelf.outputAreaForResults.text = thisMvvm.rawTextStringForDislay()
+            })
+        }
+        .addDisposableTo(disposeBag)
     }
 }
 

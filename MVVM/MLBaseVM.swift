@@ -14,24 +14,31 @@ class MLBaseVM {
     var emoticons:[String]?
     var urls:[NSURL]?
     var urlTitles:[String?]?
-    var titleDone = false
     
-    convenience init(input:String, fetchURLTitles: Bool) {
+    convenience init(input:String, fetchURLTitlesOnCompletion: ((MLBaseVM) -> Void)? ) {
         self.init()
         mentions = input.getUniqueMentionsOrNil()
         emoticons = input.getUniqueEmoticonsOrNil()
         urls = input.getUniqueURLsOrNil()
-        urlTitles = [String?](count: urls!.count, repeatedValue: nil)
-        if urls == nil || !fetchURLTitles {
+        urlTitles = nil
+        guard let urls = urls, let fetchURLTitlesOnCompletionNotNil = fetchURLTitlesOnCompletion where urls.count > 0 else {
+            fetchURLTitlesOnCompletion?(self)
             return
         }
-
-        for i in 0..<urls!.count {
-            self.fetchTitleStringFromHost(urls![i].absoluteString, index: i, onCompletion: { (titleString, targetIndex) in
+        
+        urlTitles = [String?](count: urls.count, repeatedValue: nil)
+        for i in 0..<urls.count {
+            self.fetchTitleStringFromHost(urls[i].absoluteString, index: i, onCompletion: { (titleString, targetIndex) in
                 self.urlTitles![targetIndex] = titleString
-                self.titleDone = i == (self.urls!.count-1)
+                if i == (self.urls!.count-1) {
+                    fetchURLTitlesOnCompletionNotNil(self)
+                }
             })
         }
+    }
+    
+    func rawTextStringForDislay() -> String {
+        return "\(mentions) " + "\(emoticons) " + "\(urls) " + "\(urlTitles)"
     }
     
     //Note this could be private but need to expose for Testing
