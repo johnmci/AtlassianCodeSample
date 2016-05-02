@@ -20,6 +20,7 @@
 		945311FB1CD73D5300E18B07 /* MLJSONMentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311FA1CD73D5300E18B07 /* MLJSONMentions.swift */; };
 		945311FE1CD7429900E18B07 /* MLJSONEmoticons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311FD1CD7429900E18B07 /* MLJSONEmoticons.swift */; };
 		945312001CD7441200E18B07 /* MLJSONLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945311FF1CD7441200E18B07 /* MLJSONLinks.swift */; };
+		945312021CD75AF600E18B07 /* MLBaseWebViewHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945312011CD75AF600E18B07 /* MLBaseWebViewHolder.swift */; };
 		C3A2EB3C54D7914970848876 /* Pods_MattLangan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D83D65DE21F24D4EC15076 /* Pods_MattLangan.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		945311FA1CD73D5300E18B07 /* MLJSONMentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLJSONMentions.swift; path = JSON/MLJSONMentions.swift; sourceTree = "<group>"; };
 		945311FD1CD7429900E18B07 /* MLJSONEmoticons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLJSONEmoticons.swift; path = JSON/MLJSONEmoticons.swift; sourceTree = "<group>"; };
 		945311FF1CD7441200E18B07 /* MLJSONLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLJSONLinks.swift; path = JSON/MLJSONLinks.swift; sourceTree = "<group>"; };
+		945312011CD75AF600E18B07 /* MLBaseWebViewHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MLBaseWebViewHolder.swift; path = MVVM/MLBaseWebViewHolder.swift; sourceTree = "<group>"; };
 		DB44C96A8BD034ED1A74AE7B /* Pods-MattLangan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MattLangan.release.xcconfig"; path = "Pods/Target Support Files/Pods-MattLangan/Pods-MattLangan.release.xcconfig"; sourceTree = "<group>"; };
 		EE240A99314BFFAD4F7682A5 /* Pods-MattLangan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MattLangan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MattLangan/Pods-MattLangan.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				945311F51CD714AE00E18B07 /* MLBaseVM.swift */,
+				945312011CD75AF600E18B07 /* MLBaseWebViewHolder.swift */,
 			);
 			name = MVVM;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				945311C71CD6934500E18B07 /* ViewController.swift in Sources */,
 				945311C51CD6934500E18B07 /* AppDelegate.swift in Sources */,
 				945311F41CD7129B00E18B07 /* String+MattLangan.swift in Sources */,
+				945312021CD75AF600E18B07 /* MLBaseWebViewHolder.swift in Sources */,
 				945311F61CD714AE00E18B07 /* MLBaseVM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

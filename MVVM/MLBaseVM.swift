@@ -16,6 +16,7 @@ class MLBaseVM {
     var urls:[NSURL]?
     var urlTitles = [(urlString:String,titleString:String?)]()  //Could use a Struct here, but let's explore Named Tuples
     var urlTitlesFetched = 0
+    var holderForWebKitDelegate = [MLBaseWebViewHolder]()
     
     convenience init(input:String, fetchURLTitlesOnCompletion: ((MLBaseVM) -> Void)? ) {
         self.init()
@@ -72,6 +73,17 @@ class MLBaseVM {
     //Note this could be private but need to expose for Testing
     
     func fetchTitleStringFromHost(host:String, index: Int, onCompletion: (String,String?,Int) -> Void) {
+        let webSiteDelegate = MLBaseWebViewHolder(host: host, index: index, completion: onCompletion)
+        
+        // We have to hold onto the delegate object here, otherwise it will get Garbaged Collected as the logic runs on a background thread. 
+        // This should be GCed when the MLBaseVM is GCed
+        
+        self.holderForWebKitDelegate.append(webSiteDelegate)
+    }
+ 
+    //This is old logic, we parsed the HTML, but this proved to be a problem because the html is not formatted
+    
+    private func xfetchTitleStringFromHost(host:String, index: Int, onCompletion: (String,String?,Int) -> Void) {
         var titleString:String?
         Alamofire.request(.GET, host)
             .response { request, response, data, error in
@@ -80,9 +92,11 @@ class MLBaseVM {
         }
     }
     
+    //Not Used. MLBaseWebViewHolder uses WKWebView
     //Nice to have would be a function that understood <title> </title> but for any html keyword that uses this pattern
-    //Could also be a webpage render that might return title, but that is very heavyweight for just finding the title
-    
+    //Could also be a webpage render that might return title, but that is very heavyweight for just finding the title, but testing showed the text supplied is not formatted
+
+
     private func getTitleString(data:NSData?,possibleError:NSError?) -> String? {
         if let actualError = possibleError {
             return "Status: \(actualError.code): \(actualError.localizedDescription)"
