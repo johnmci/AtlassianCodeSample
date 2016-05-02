@@ -33,7 +33,6 @@ class MLParser {
             urls.forEach { (url) in
                 self.urlTitles.append((url.absoluteString,""))
             }
-            fetchURLTitlesOnCompletion?(self)
             return
         }
         
