@@ -29,7 +29,8 @@ struct MLJSONUrls: Mappable {
     }
 }
 
-struct MLJSONLinks: Mappable {
+struct .throttle(
+: Mappable {
     var links: [MLJSONUrls]!
     
     init?(_ map: Map) {

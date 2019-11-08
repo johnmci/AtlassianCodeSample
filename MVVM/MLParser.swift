@@ -117,7 +117,8 @@ class MLParser {
         let titleMarker = "<title>"
         guard let nonNilTitleRange = nonNilHtmlString.rangeOfString(titleMarker, options: .CaseInsensitiveSearch, range: nil, locale: nil),
             //Ensure we search after the <title>
-            let nonNilTitleEndRange = nonNilHtmlString.rangeOfString("</title>", options: .CaseInsensitiveSearch, range: Range(nonNilTitleRange.startIndex.advancedBy(titleMarker.length)..<nonNilHtmlString.endIndex), locale: nil) else {
+            let nonNilTitleEndRange = nonNilHtmlString.rangeOfString("</title>", options: .CaseInsensitiveSearch, range: Range(nonNilTitleRange.startIndex.advancedBy(titleMarker.length)..<nonNilHtmlString.endIndex), locale: nil)
+            else {
                 return nil
         }
         let start = nonNilTitleRange.startIndex.advancedBy(titleMarker.length) //Ok it's a duplication statement collides with the guard clause usage

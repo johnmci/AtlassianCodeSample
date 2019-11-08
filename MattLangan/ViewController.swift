@@ -52,6 +52,7 @@ class ViewController: UIViewController {
             .subscribeNext { [weak self] (inputString) in
                 self?.model.processTextInputWithNoURLFetch(inputString)
         }
+        .addDisposableTo(disposeBag)
         textInput.becomeFirstResponder()
     }
     

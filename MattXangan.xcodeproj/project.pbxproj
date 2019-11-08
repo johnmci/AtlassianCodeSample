@@ -37,14 +37,14 @@
 
 /* Begin PBXFileReference section */
 		88D83D65DE21F24D4EC15076 /* Pods_MattLangan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MattLangan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		945311C11CD6934500E18B07 /* MattLangan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MattLangan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		945311C11CD6934500E18B07 /* MattXangan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MattXangan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		945311C41CD6934500E18B07 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		945311C61CD6934500E18B07 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../MattLangan/ViewController.swift; sourceTree = "<group>"; };
 		945311C91CD6934500E18B07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		945311CB1CD6934500E18B07 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		945311CE1CD6934500E18B07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		945311D01CD6934500E18B07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		945311D51CD6934500E18B07 /* MattLanganTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MattLanganTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		945311D51CD6934500E18B07 /* MattXangan.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MattXangan.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		945311D91CD6934500E18B07 /* MattLanganTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MattLanganTests.swift; sourceTree = "<group>"; };
 		945311DB1CD6934500E18B07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		945311EA1CD694E800E18B07 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		945311B81CD6934500E18B07 = {
 			isa = PBXGroup;
 			children = (
-				945311C31CD6934500E18B07 /* MattLangan */,
+				945311C31CD6934500E18B07 /* MattXangan */,
 				945311E41CD6936900E18B07 /* Vendor */,
 				945311D81CD6934500E18B07 /* MattLanganTests */,
 				945311C21CD6934500E18B07 /* Products */,
@@ -112,13 +112,13 @@
 		945311C21CD6934500E18B07 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				945311C11CD6934500E18B07 /* MattLangan.app */,
-				945311D51CD6934500E18B07 /* MattLanganTests.xctest */,
+				945311C11CD6934500E18B07 /* MattXangan.app */,
+				945311D51CD6934500E18B07 /* MattXangan.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		945311C31CD6934500E18B07 /* MattLangan */ = {
+		945311C31CD6934500E18B07 /* MattXangan */ = {
 			isa = PBXGroup;
 			children = (
 				945311FC1CD73D5A00E18B07 /* JSON */,
@@ -131,6 +131,7 @@
 				945311CD1CD6934500E18B07 /* LaunchScreen.storyboard */,
 				945311D01CD6934500E18B07 /* Info.plist */,
 			);
+			name = MattXangan;
 			path = MattLangan;
 			sourceTree = "<group>";
 		};
@@ -203,9 +204,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		945311C01CD6934500E18B07 /* MattLangan */ = {
+		945311C01CD6934500E18B07 /* MattXangan */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 945311DE1CD6934500E18B07 /* Build configuration list for PBXNativeTarget "MattLangan" */;
+			buildConfigurationList = 945311DE1CD6934500E18B07 /* Build configuration list for PBXNativeTarget "MattXangan" */;
 			buildPhases = (
 				F1E3F626D02BACA35C743894 /* Check Pods Manifest.lock */,
 				945311BD1CD6934500E18B07 /* Sources */,
@@ -219,14 +220,14 @@
 			);
 			dependencies = (
 			);
-			name = MattLangan;
+			name = MattXangan;
 			productName = MattLangan;
-			productReference = 945311C11CD6934500E18B07 /* MattLangan.app */;
+			productReference = 945311C11CD6934500E18B07 /* MattXangan.app */;
 			productType = "com.apple.product-type.application";
 		};
-		945311D41CD6934500E18B07 /* MattLanganTests */ = {
+		945311D41CD6934500E18B07 /* MattXanganTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 945311E11CD6934500E18B07 /* Build configuration list for PBXNativeTarget "MattLanganTests" */;
+			buildConfigurationList = 945311E11CD6934500E18B07 /* Build configuration list for PBXNativeTarget "MattXanganTests" */;
 			buildPhases = (
 				945311D11CD6934500E18B07 /* Sources */,
 				945311D21CD6934500E18B07 /* Frameworks */,
@@ -237,9 +238,9 @@
 			dependencies = (
 				945311D71CD6934500E18B07 /* PBXTargetDependency */,
 			);
-			name = MattLanganTests;
+			name = MattXanganTests;
 			productName = MattLanganTests;
-			productReference = 945311D51CD6934500E18B07 /* MattLanganTests.xctest */;
+			productReference = 945311D51CD6934500E18B07 /* MattXangan.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -249,7 +250,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Corporate Smalltalk Consulting Ltd";
 				TargetAttributes = {
 					945311C01CD6934500E18B07 = {
@@ -261,9 +262,9 @@
 					};
 				};
 			};
-			buildConfigurationList = 945311BC1CD6934500E18B07 /* Build configuration list for PBXProject "MattLangan" */;
+			buildConfigurationList = 945311BC1CD6934500E18B07 /* Build configuration list for PBXProject "MattXangan" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -274,8 +275,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				945311C01CD6934500E18B07 /* MattLangan */,
-				945311D41CD6934500E18B07 /* MattLanganTests */,
+				945311C01CD6934500E18B07 /* MattXangan */,
+				945311D41CD6934500E18B07 /* MattXanganTests */,
 			);
 		};
 /* End PBXProject section */
@@ -393,7 +394,7 @@
 /* Begin PBXTargetDependency section */
 		945311D71CD6934500E18B07 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 945311C01CD6934500E18B07 /* MattLangan */;
+			target = 945311C01CD6934500E18B07 /* MattXangan */;
 			targetProxy = 945311D61CD6934500E18B07 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -422,18 +423,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -468,18 +480,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -498,6 +521,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -507,11 +531,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EE240A99314BFFAD4F7682A5 /* Pods-MattLangan.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MattLangan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.smalltalkconsulting.test.MattLangan;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.smalltalkconsulting.test.MattXangan;
+				PRODUCT_NAME = MattXangan;
 			};
 			name = Debug;
 		};
@@ -519,11 +544,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DB44C96A8BD034ED1A74AE7B /* Pods-MattLangan.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MattLangan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.smalltalkconsulting.test.MattLangan;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.smalltalkconsulting.test.MattXangan;
+				PRODUCT_NAME = MattXangan;
 			};
 			name = Release;
 		};
@@ -534,8 +560,8 @@
 				INFOPLIST_FILE = MattLanganTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.smalltalkconsulting.test.MattLanganTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MattLangan.app/MattLangan";
+				PRODUCT_NAME = MattXangan;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MattXangan.app/MattXangan";
 			};
 			name = Debug;
 		};
@@ -546,15 +572,15 @@
 				INFOPLIST_FILE = MattLanganTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.smalltalkconsulting.test.MattLanganTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MattLangan.app/MattLangan";
+				PRODUCT_NAME = MattXangan;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MattXangan.app/MattXangan";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		945311BC1CD6934500E18B07 /* Build configuration list for PBXProject "MattLangan" */ = {
+		945311BC1CD6934500E18B07 /* Build configuration list for PBXProject "MattXangan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				945311DC1CD6934500E18B07 /* Debug */,
@@ -563,7 +589,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		945311DE1CD6934500E18B07 /* Build configuration list for PBXNativeTarget "MattLangan" */ = {
+		945311DE1CD6934500E18B07 /* Build configuration list for PBXNativeTarget "MattXangan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				945311DF1CD6934500E18B07 /* Debug */,
@@ -572,7 +598,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		945311E11CD6934500E18B07 /* Build configuration list for PBXNativeTarget "MattLanganTests" */ = {
+		945311E11CD6934500E18B07 /* Build configuration list for PBXNativeTarget "MattXanganTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				945311E21CD6934500E18B07 /* Debug */,
